@@ -18,16 +18,22 @@ class AddBook extends Component {
   formSubmitted = event => {
     event.preventDefault()
     const {name, author} = this.state
-    const newBook = {
-      uniqueNo: Math.random().toString(36).substr(2, 9),
-      name,
-      author,
+    if (name === '') {
+      alert('Name cannot be empty')
+    } else if (author === '') {
+      alert('author cannot be empty')
+    } else {
+      const newBook = {
+        uniqueNo: Math.random().toString(36).substr(2, 9),
+        name,
+        author,
+      }
+      const localData = JSON.parse(localStorage.getItem('myData'))
+      const updatedLocalData = [...localData, newBook]
+      localStorage.setItem('myData', JSON.stringify(updatedLocalData))
+      const {history} = this.props
+      history.push('/')
     }
-    const localData = JSON.parse(localStorage.getItem('myData'))
-    const updatedLocalData = [...localData, newBook]
-    localStorage.setItem('myData', JSON.stringify(updatedLocalData))
-    const {history} = this.props
-    history.push('/')
   }
 
   goToHome = () => {
